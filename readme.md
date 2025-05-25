@@ -71,28 +71,28 @@ http://127.0.0.1:5000
 ## 🖼️ Ekran Görüntüleri
 
 ### Ana Sayfa
-![Ana Sayfa](screenshots/anasayfa.png)
+![Ana Sayfa](Screenshots/anasayfa.png)
 
 ### Raporlar Sayfası
-![Raporlar](screenshots/raporlar.png)
+![Raporlar](Screenshots/raporlar.png)
 
 ### Öğrenciler (Students) Sayfası
-![Students](screenshots/students.png)
+![Students](Screenshots/students.png)
 
 ### Dersler (Courses) Sayfası
-![Courses](screenshots/courses.png)
+![Courses](Screenshots/courses.png)
 
 ### Giriş (Login) Sayfası
-![Login](screenshots/login.png)
+![Login](Screenshots/login.png)
 
 ### Sınavlar (Exam) Sayfası
-![Exam](screenshots/exam.png)
+![Exam](Screenshots/exam.png)
 
 ### Notlar (Grades) Sayfası
-![Grades](screenshots/grades.png)
+![Grades](Screenshots/grades.png)
 
 ### Program Çıktıları (Program Outcomes) Sayfası
-![Program Outcomes](screenshots/program_outcomes.png)
+![Program Outcomes](Screenshots/program_outcomes.png)
 
 ---
 
