@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% block title %}Raporlar{% endblock %}
+
+{% block content %}
+<h2>Raporlar</h2>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#by-student">Ogrenciye Gore</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#by-po">PC'ye Gore</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#by-course">Derslere Gore</a>
+    </li>
+</ul>
+
+<div class="tab-content mt-3">
+    <!-- Ogrenciye gore -->
+    <div class="tab-pane fade show active" id="by-student">
+
+        <!-- FILTRE -->
+        <form method="GET" class="mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="student_number" class="form-control" placeholder="Ogrenci Numarasi">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" type="submit">Filtrele</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- GORUNUM SECIMI -->
+        <ul class="nav nav-pills mt-3">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#text-view">Nota Gore</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#chart-view">Grafige Gore</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3">
+            <!-- Nota gore -->
+            <div class="tab-pane fade show active" id="text-view">
+                {% if selected_student_data %}
+                <h5>{{ selected_student_data.student.name }} {{ selected_student_data.student.surname }}</h5>
+                <ul>
+                    {% for po_id, avg in selected_student_data.po_averages.items() %}
+                    <li>PC {{ po_id }}: {{ avg }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                {% for result in results %}
+                <h5>{{ result.student.name }} {{ result.student.surname }}</h5>
+                <ul>
+                    {% for po_id, avg in result.po_averages.items() %}
+                    <li>PC {{ po_id }}: {{ avg }}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Grafige gore -->
+            <div class="tab-pane fade" id="chart-view">
+                {% if selected_student_data %}
+                <h5>{{ selected_student_data.student.name }} {{ selected_student_data.student.surname }} - PC Basari Grafigi</h5>
+                <canvas id="selectedStudentChart" width="400" height="150"></canvas>
+                <script>
+                        new Chart(document.getElementById('selectedStudentChart').getContext('2d'), {
+                            type: 'bar',
+                            data: {
+                                labels: [
+                                    {% for po_id in selected_student_data.po_averages %}
+                                        "PC {{ po_id }}"{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                ],
+                                datasets: [{
+                                    label: 'Basari Ortalamasi',
+                                    data: [
+                                        {% for avg in selected_student_data.po_averages.values() %}
+                                            {{ avg }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    ],
+                                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100
+                                    }
+                                }
+                            }
+                        });
+                </script>
+                {% else %}
+                {% for result in results %}
+                <h5>{{ result.student.name }} {{ result.student.surname }} - PC Grafigi</h5>
+                <canvas id="chartStudent{{ loop.index }}" width="400" height="150"></canvas>
+                <script>
+                            new Chart(document.getElementById('chartStudent{{ loop.index }}').getContext('2d'), {
+                                type: 'bar',
+                                data: {
+                                    labels: [
+                                        {% for po_id in result.po_averages %}
+                                            "PC {{ po_id }}"{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    ],
+                                    datasets: [{
+                                        label: 'Basari Ortalamasi',
+                                        data: [
+                                            {% for avg in result.po_averages.values() %}
+                                                {{ avg }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                        ],
+                                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                                        borderColor: 'rgba(153, 102, 255, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            max: 100
+                                        }
+                                    }
+                                }
+                            });
+                </script>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- PC'ye gore -->
+    <div class="tab-pane fade" id="by-po">
+        <canvas id="poChart" width="600" height="300"></canvas>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>PC Kodu</th>
+                    <th>Aciklama</th>
+                    <th>Ortalama Basari</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for po in po_summary %}
+                <tr>
+                    <td>{{ po.po.code }}</td>
+                    <td>{{ po.po.description }}</td>
+                    <td>{{ po.average }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Derslere gore -->
+    <div class="tab-pane fade" id="by-course">
+        <canvas id="courseChart" width="600" height="300"></canvas>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Ders</th>
+                    <th>Ogretim Uyesi</th>
+                    <th>Ortalama Basari</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in course_summary %}
+                <tr>
+                    <td>{{ c.course.course_name }}</td>
+                    <td>{{ c.course.instructor }}</td>
+                    <td>{{ c.average }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('poChart').getContext('2d');
+    const poChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for po in po_summary %}
+                    "PC {{ po.po.code }}"{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'PC Basari Ortalamasi',
+                data: [
+                    {% for po in po_summary %}
+                        {{ po.average }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                ],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    const courseCtx = document.getElementById('courseChart').getContext('2d');
+    const courseChart = new Chart(courseCtx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for c in course_summary %}
+                    "{{ c.course.course_name }}"{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'Ders Basari Ortalamasi',
+                data: [
+                    {% for c in course_summary %}
+                        {{ c.average }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                ],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Notlar{% endblock %}
+
+{% block content %}
+<h2>Not Yükle</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>CSV Dosyası:</label>
+        <input type="file" name="file" class="form-control" required>
+    </div>
+    <button class="btn btn-primary">Yükle</button>
+</form>
+
+<hr>
+
+<h2>Yüklenmiş Notlar</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Öğrenci</th>
+            <th>Numara</th>
+            <th>Ders</th>
+            <th>Sınav</th>
+            <th>Not</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.student.name }} {{ grade.student.surname }}</td>
+            <td>{{ grade.student.student_number }}</td>
+            <td>{{ grade.exam.course.course_name }}</td>
+            <td>{{ grade.exam.exam_name }}</td>
+            <td>{{ grade.grade }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

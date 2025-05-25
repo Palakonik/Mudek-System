@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Ogrenci Duzenle{% endblock %}
+{% block content %}
+<h3>Ogrenci Duzenle</h3>
+<form method="POST">
+    <input class="form-control" name="name" value="{{ student.name }}" required><br>
+    <input class="form-control" name="surname" value="{{ student.surname }}" required><br>
+    <input class="form-control" name="student_number" value="{{ student.student_number }}" required><br>
+    <input class="form-control" name="email" value="{{ student.email }}" required><br>
+    <button class="btn btn-primary" type="submit">Guncelle</button>
+</form>
+{% endblock %}

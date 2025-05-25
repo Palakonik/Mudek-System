@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Program Ciktilari{% endblock %}
+
+{% block content %}
+<h2>Program Ciktilari (PC)</h2>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>PC Kodu</th>
+            <th>Aciklama</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for po in outcomes %}
+        <tr>
+            <td>{{ po.code }}</td>
+            <td>{{ po.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
