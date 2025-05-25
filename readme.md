@@ -1,87 +1,110 @@
-# ?? Müdek-System
+# ğŸ“ MÃ¼dek-System
 
-MÜDEK akreditasyon süreci kapsamında program çıktılarının (PÇ) takibini kolaylaştırmak amacıyla geliştirilmiş web tabanlı bir sistemdir. Flask, MySQL, HTML/CSS ve JavaScript teknolojileriyle inşa edilmiştir.
-
----
-
-## ?? Özellikler
-
-- ?? Program çıktılarının (PÇ) tanımlanması ve düzenlenmesi
-- ?? Öğrenci çıktılarının değerlendirilmesi
-- ????? Öğretim üyeleri tarafından veri girişi
-- ?? Raporlama ve çıktı analizleri
-- ?? Kullanıcı girişi ve yetkilendirme (admin/öğretim üyesi)
+MÃœDEK akreditasyon sÃ¼reci kapsamÄ±nda program Ã§Ä±ktÄ±larÄ±nÄ±n (PÃ‡) takibini kolaylaÅŸtÄ±rmak amacÄ±yla geliÅŸtirilmiÅŸ web tabanlÄ± bir sistemdir. Flask, MySQL, HTML/CSS ve JavaScript teknolojileriyle inÅŸa edilmiÅŸtir.
 
 ---
 
-## ?? Kullanılan Teknolojiler
+## âœ¨ Ã–zellikler
+
+- ğŸ¯ Program Ã§Ä±ktÄ±larÄ±nÄ±n (PÃ‡) tanÄ±mlanmasÄ± ve dÃ¼zenlenmesi
+- ğŸ“Š Ã–ÄŸrenci Ã§Ä±ktÄ±larÄ±nÄ±n deÄŸerlendirilmesi
+- ğŸ§‘â€ğŸ« Ã–ÄŸretim Ã¼yeleri tarafÄ±ndan veri giriÅŸi
+- ğŸ“ Raporlama ve Ã§Ä±ktÄ± analizleri
+- ğŸ” KullanÄ±cÄ± giriÅŸi ve yetkilendirme (admin/Ã¶ÄŸretim Ã¼yesi)
+
+---
+
+## ğŸ› ï¸ KullanÄ±lan Teknolojiler
 
 - **Backend:** Python (Flask)
-- **Veritabanı:** MySQL
+- **VeritabanÄ±:** MySQL
 - **Frontend:** HTML, CSS, JavaScript (gerekirse Bootstrap)
 - **Versiyon Kontrol:** Git & GitHub
 
 ---
 
-## ?? Kurulum (Yerel Geliştirme)
+## ğŸš€ Kurulum (Yerel GeliÅŸtirme)
 
-### 1. Reponun klonlanması
+### 1. Reponun klonlanmasÄ±
 
 ```bash
 git clone https://github.com/Palakonik/Mudek-System.git
 cd Mudek-System
+```
 
-### 2. Sanal ortam oluştur ve aktif et
+### 2. Sanal ortam oluÅŸtur ve aktif et
 
+```bash
 conda create -n mudek-env python=3.10
 conda activate mudek-env
+```
 
-### 3. Gerekli paketlerin yüklenmesi
+### 3. Gerekli paketlerin yÃ¼klenmesi
 
+```bash
 pip install -r requirements.txt
+```
 
-### 4. Veritabanı yapılandırması
+> EÄŸer `requirements.txt` yoksa ÅŸu komutla yÃ¼kleyebilirsin:
+```bash
+pip install flask mysql-connector-python
+```
 
-config.py veya .env dosyasını düzenleyerek kendi MySQL kullanıcı adı ve şifreni gir.
+### 4. VeritabanÄ± yapÄ±landÄ±rmasÄ±
 
-### 5. Uygulamayı Başlat
+`config.py` veya `.env` dosyasÄ±nÄ± dÃ¼zenleyerek kendi MySQL kullanÄ±cÄ± adÄ± ve ÅŸifreni gir.
 
+### 5. UygulamayÄ± BaÅŸlat
+
+```bash
 python run.py
+```
 
-## ?? Ekran Görüntüleri
+TarayÄ±cÄ±nda ÅŸu adrese giderek uygulamayÄ± test edebilirsin:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## ğŸ–¼ï¸ Ekran GÃ¶rÃ¼ntÃ¼leri
 
 ### Ana Sayfa
 ![Ana Sayfa](screenshots/anasayfa.png)
 
-### Raporlar Sayfası
+### Raporlar SayfasÄ±
 ![Raporlar](screenshots/raporlar.png)
 
-### Öğrenciler (Students) Sayfası
+### Ã–ÄŸrenciler (Students) SayfasÄ±
 ![Students](screenshots/students.png)
 
-### Dersler (Courses) Sayfası
+### Dersler (Courses) SayfasÄ±
 ![Courses](screenshots/courses.png)
 
-### Giriş (Login) Sayfası
+### GiriÅŸ (Login) SayfasÄ±
 ![Login](screenshots/login.png)
 
-### Sınavlar (Exam) Sayfası
+### SÄ±navlar (Exam) SayfasÄ±
 ![Exam](screenshots/exam.png)
 
-### Notlar (Grades) Sayfası
-![Exam](screenshots/exam.png)
+### Notlar (Grades) SayfasÄ±
+![Grades](screenshots/grades.png)
 
-### Program Çıktıları (Program Outcomes) Sayfası
+### Program Ã‡Ä±ktÄ±larÄ± (Program Outcomes) SayfasÄ±
 ![Program Outcomes](screenshots/program_outcomes.png)
 
-?? Lisans
-Bu proje MIT lisansı ile lisanslanmıştır. Ayrıntılar için LICENSE dosyasına göz atabilirsiniz.
+---
 
-?? İletişim
-Her türlü öneri veya katkı için iletişime geçebilirsin:
+## ğŸ“„ Lisans
 
-?? ihsan.gs125@gmail.com
-?? GitHub: @Palakonik
+Bu proje MIT lisansÄ± ile lisanslanmÄ±ÅŸtÄ±r. AyrÄ±ntÄ±lar iÃ§in `LICENSE` dosyasÄ±na gÃ¶z atabilirsiniz.
 
+---
 
+## ğŸ“¬ Ä°letiÅŸim
 
+Her tÃ¼rlÃ¼ Ã¶neri veya katkÄ± iÃ§in iletiÅŸime geÃ§ebilirsin:
+
+- ğŸ“§ ihsan.gs125@gmail.com  
+- ğŸ™ GitHub: [@Palakonik](https://github.com/Palakonik)
