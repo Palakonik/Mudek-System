@@ -197,9 +197,9 @@ def grades():
 
             with open(filepath, 'r', encoding='utf-8') as f:
                 reader = csv.reader(f)
-                next(reader)  # Baþlýk satýrýný atla
+                next(reader)  # Baï¿½lï¿½k satï¿½rï¿½nï¿½ atla
 
-                for i, row in enumerate(reader, start=2):  # satýr numarasý 2'den baþlar
+                for i, row in enumerate(reader, start=2):  # satï¿½r numarasï¿½ 2'den baï¿½lar
                     try:
                         student_number, exam_id, grade_val = row
                         grade_val = float(grade_val)
@@ -345,6 +345,7 @@ def edit_course(course_id):
         course.course_code = request.form['course_code']
         course.credit = request.form['credit']
         course.instructor = request.form['instructor']
+
         try:
             db.session.commit()
             flash("Ders guncellendi.")
@@ -354,8 +355,19 @@ def edit_course(course_id):
         return redirect(url_for('list_courses'))
     return render_template('edit_course.html', course=course)
 
+
+
 @app.route('/program_outcomes')
 @login_required
 def program_outcomes():
     outcomes = ProgramOutcome.query.all()
     return render_template('program_outcomes.html', outcomes=outcomes)
+
+@app.route('/course/<int:course_id>/grades')
+@login_required
+def course_grades(course_id):
+    course = Course.query.get_or_404(course_id)
+    exams = Exam.query.filter_by(course_id=course_id).all()
+    exam_ids = [exam.id for exam in exams]
+    grades = Grade.query.filter(Grade.exam_id.in_(exam_ids)).all()
+    return render_template('course_grades.html', course=course, grades=grades)

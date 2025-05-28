@@ -7,7 +7,12 @@
 
 <form method="POST" enctype="multipart/form-data">
     <div class="mb-3">
-        <label>CSV Dosyası:</label>
+        <label class="form-label">CSV Dosyası:</label>
+        <small class="form-text text-muted d-block mb-2">
+            CSV formatı şu şekilde olmalıdır:<br>
+            <code>Ogrenci Numarasi,Sinav Id, Not</code><br>
+            <code>Ornek: 20210001,59,50</code><br>
+        </small>
         <input type="file" name="file" class="form-control" required>
     </div>
     <button class="btn btn-primary">Yükle</button>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ course.course_name }} Notları{% endblock %}
+
+{% block content %}
+<h2>{{ course.course_name }} - Not Listesi</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Öğrenci</th>
+            <th>Numara</th>
+            <th>Sınav</th>
+            <th>Not</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.student.name }} {{ grade.student.surname }}</td>
+            <td>{{ grade.student.student_number }}</td>
+            <td>{{ grade.exam.exam_name }}</td>
+            <td>{{ grade.grade }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('reports') }}#by-course" class="btn btn-secondary mt-3">Geri Dön</a>
+{% endblock %}

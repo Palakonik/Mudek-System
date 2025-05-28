@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 25 May 2025, 19:08:12
+-- Üretim Zamanı: 24 May 2025, 19:30:07
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.2.12
 
@@ -560,19 +560,6 @@ CREATE TABLE `grades` (
   `grade` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Tablo döküm verisi `grades`
---
-
-INSERT INTO `grades` (`id`, `student_id`, `exam_id`, `grade`) VALUES
-(7, 1, 1, 78.5),
-(8, 2, 1, 91),
-(9, 3, 1, 65),
-(10, 1, 2, 82),
-(11, 2, 2, 88),
-(12, 3, 2, 59),
-(13, 1, 5, 99);
-
 -- --------------------------------------------------------
 
 --
@@ -658,22 +645,7 @@ INSERT INTO `students` (`id`, `name`, `surname`, `student_number`, `email`) VALU
 (17, 'Tolga', 'Güneş', '20210017', 'tolga.gunes@example.com'),
 (18, 'Buse', 'Bozkurt', '20210018', 'buse.bozkurt@example.com'),
 (19, 'Kerem', 'Özkan', '20210019', 'kerem.ozkan@example.com'),
-(20, 'Nazlı', 'Şen', '20210020', 'nazli.sen@example.com'),
-(22, 'mete', 'kayaç', '12312345', 'metehankral@gmail.com'),
-(25, 'mete', 'kayaç', '12412625', 'sjdhkabgjwskdbjaqk@gmail.com'),
-(26, 'berkay', 'alkiz', '12312348', 'sbjdahskad@gmail.com');
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `student_course`
---
-
-CREATE TABLE `student_course` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(20, 'Nazlı', 'Şen', '20210020', 'nazli.sen@example.com');
 
 -- --------------------------------------------------------
 
@@ -881,8 +853,7 @@ INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
 -- Tablo için indeksler `courses`
 --
 ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `course_code` (`course_code`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Tablo için indeksler `course_po_relations`
@@ -912,7 +883,7 @@ ALTER TABLE `exam_po_relations`
 --
 ALTER TABLE `grades`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_id` (`student_id`,`exam_id`),
+  ADD KEY `student_id` (`student_id`),
   ADD KEY `exam_id` (`exam_id`);
 
 --
@@ -927,14 +898,6 @@ ALTER TABLE `program_outcomes`
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `student_number` (`student_number`);
-
---
--- Tablo için indeksler `student_course`
---
-ALTER TABLE `student_course`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `student_id` (`student_id`),
-  ADD KEY `course_id` (`course_id`);
 
 --
 -- Tablo için indeksler `student_courses`
@@ -959,7 +922,7 @@ ALTER TABLE `users`
 -- Tablo için AUTO_INCREMENT değeri `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `course_po_relations`
@@ -983,7 +946,7 @@ ALTER TABLE `exam_po_relations`
 -- Tablo için AUTO_INCREMENT değeri `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `program_outcomes`
@@ -995,13 +958,7 @@ ALTER TABLE `program_outcomes`
 -- Tablo için AUTO_INCREMENT değeri `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- Tablo için AUTO_INCREMENT değeri `student_course`
---
-ALTER TABLE `student_course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `student_courses`
@@ -1045,13 +1002,6 @@ ALTER TABLE `exam_po_relations`
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
   ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`);
-
---
--- Tablo kısıtlamaları `student_course`
---
-ALTER TABLE `student_course`
-  ADD CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
-  ADD CONSTRAINT `student_course_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
 
 --
 -- Tablo kısıtlamaları `student_courses`
